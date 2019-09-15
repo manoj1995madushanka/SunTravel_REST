@@ -1,13 +1,17 @@
 package com.sunTravel.sunRest.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="T475_Room")
-public class Room {
+public class Room implements Serializable {
     @Id
     @Column(name="room_type")
     private String room_type;
@@ -18,9 +22,17 @@ public class Room {
     @Column(name="room_price")
     private double room_price;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "hotel_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    /*@JsonIgnore*/
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Hotel hotel;
+
     public Room(){}
 
-    public Room( int room_count, int max_adults, double room_price) {
+    public Room(String room_type, int room_count, int max_adults, double room_price) {
+        this.room_type = room_type;
         this.room_count = room_count;
         this.max_adults = max_adults;
         this.room_price = room_price;
@@ -56,5 +68,13 @@ public class Room {
 
     public void setRoom_price(double room_price) {
         this.room_price = room_price;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }

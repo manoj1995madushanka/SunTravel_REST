@@ -1,6 +1,9 @@
 package com.sunTravel.sunRest.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "T475_Contract")
-public class Contract implements Serializable {
+public class  Contract implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "contractId")
@@ -19,6 +22,12 @@ public class Contract implements Serializable {
 
     @Column(name="end_date")
     private Date end_date;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "hotel_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    /*@JsonIgnore*/
+    private Hotel hotel;
 
     public Contract(){}
 
@@ -49,5 +58,13 @@ public class Contract implements Serializable {
 
     public void setEnd_date(Date end_date) {
         this.end_date = end_date;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }

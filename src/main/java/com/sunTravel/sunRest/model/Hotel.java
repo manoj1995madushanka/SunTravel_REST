@@ -1,6 +1,11 @@
 package com.sunTravel.sunRest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="T475_Hotel")
@@ -8,7 +13,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="hotel_id")
-    private long hotel_id;
+    private long id;
     @Column(name="hotel_name")
     private String hotel_name;
     @Column(name="hotel_location")
@@ -17,6 +22,7 @@ public class Hotel {
     private String hotel_email;
     @Column(name="hotel_telephone")
     private String hotel_telephone;
+
 
     public Hotel(){}
 
@@ -28,11 +34,11 @@ public class Hotel {
     }
 
     public long getHotel_id() {
-        return hotel_id;
+        return id;
     }
 
     public void setHotel_id(long hotel_id) {
-        this.hotel_id = hotel_id;
+        this.id = hotel_id;
     }
 
     public String getHotel_name() {

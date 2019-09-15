@@ -18,7 +18,7 @@ public class HotelController {
     }
 
     @RequestMapping("/hotels/{hotelId}")
-    public Hotel getHotel(@PathVariable("hotelId") int id){
+    public Hotel getHotel(@PathVariable("hotelId") long id){
         return this.hotelService.getHotel(id);
     }
 
@@ -28,8 +28,9 @@ public class HotelController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value= "hotels/{hotelId}")
-    public void updateHotel(@RequestBody Hotel hotel, @PathVariable int hotelId){
+    public void updateHotel(@RequestBody Hotel hotel, @PathVariable long hotelId){
         hotelService.updateHotel(hotel,hotelId);
+
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "hotels/{hotelId}")
