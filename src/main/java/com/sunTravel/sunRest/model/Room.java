@@ -8,6 +8,10 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="T475_Room")
@@ -28,6 +32,16 @@ public class Room implements Serializable {
     /*@JsonIgnore*/
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Hotel hotel;
+
+
+    //many to many relationship between room and contract
+    @OneToMany(
+            mappedBy = "room",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Contract_Room> rooms = new ArrayList<>();
+
 
     public Room(){}
 
@@ -76,5 +90,13 @@ public class Room implements Serializable {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public List<Contract_Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Contract_Room> rooms) {
+        this.rooms = rooms;
     }
 }

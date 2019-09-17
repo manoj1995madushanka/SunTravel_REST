@@ -7,7 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "T475_Contract")
@@ -17,7 +17,7 @@ public class  Contract implements Serializable {
     @Column(name = "contractId")
     private long contractId;
 
-    @Column(name="start_date")
+    @Column(name="st_date")
     private Date st_date;
 
     @Column(name="end_date")
@@ -28,6 +28,15 @@ public class  Contract implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     /*@JsonIgnore*/
     private Hotel hotel;
+
+
+    // for map many to many relationship among room and contract
+    @OneToMany(
+            mappedBy = "contract",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Contract_Room> contracts = new ArrayList<>();
 
     public Contract(){}
 
@@ -66,5 +75,14 @@ public class  Contract implements Serializable {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+
+    public List<Contract_Room> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract_Room> contracts) {
+        this.contracts = contracts;
     }
 }

@@ -1,7 +1,10 @@
 package com.sunTravel.sunRest.service;
 
 import com.sunTravel.sunRest.exception.ResourceNotFoundException;
+import com.sunTravel.sunRest.model.Contract_Room;
 import com.sunTravel.sunRest.model.Room;
+import com.sunTravel.sunRest.repository.ContractRepository;
+import com.sunTravel.sunRest.repository.ContractRoomRepository;
 import com.sunTravel.sunRest.repository.HotelRepository;
 import com.sunTravel.sunRest.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,14 @@ public class RoomService {
 
     @Autowired
     private HotelRepository hotelRepository;
+
+    @Autowired
+    private ContractRoomRepository contractRoomRepository;
+
+    @Autowired
+    private ContractRepository contractRepository;
+
+    private Contract_Room contract_room;
 
     public List<Room> getAllRooms(){
         return roomRepository.findAll();
@@ -42,6 +53,9 @@ public class RoomService {
             return roomRepository.save(room);
         }).orElseThrow(() -> new ResourceNotFoundException("HotelId " + hotelId + " not found"));
     }
+
+
+
 
     public void updateRoom(Room room, String roomType){
         room.setRoom_type(roomType);

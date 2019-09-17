@@ -18,7 +18,7 @@ public class RoomController {
 
     // for get all rooms without consider hotel
     @RequestMapping("/rooms")
-    public List<Room> getAllrooms(){
+    public List<Room> getAllRooms(){
         return this.roomService.getAllRooms();
     }
 
@@ -46,6 +46,15 @@ public class RoomController {
                                @Valid @RequestBody Room room) {
         this.roomService.addRoom(hotelId,room);
     }
+
+
+
+
+    /*@PostMapping("/contracts/{contractId}/rooms")
+    public void createRoom(@PathVariable (value = "contractId") Long contractId,
+                           @Valid @RequestBody Room room) {
+        this.roomService.addRoom(contractId,room);
+    }*/
 
     // update contract using contract id
     @RequestMapping(method = RequestMethod.PUT, value= "rooms/{roomType}")
